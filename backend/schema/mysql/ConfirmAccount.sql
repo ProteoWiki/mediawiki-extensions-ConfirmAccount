@@ -15,6 +15,8 @@ CREATE TABLE IF NOT EXISTS /*_*/account_requests (
 	acr_name varchar(255) binary NOT NULL default '',
 	-- Optional 'real name' to be displayed in credit listings
 	acr_real_name varchar(255) binary NOT NULL default '',
+	-- add surname toniher
+	acr_real_surname varchar(255) binary NOT NULL default '',
 	-- Note: email should be restricted, not public info.
 	-- Same with passwords.
 	acr_email varchar(255) binary NOT NULL,
@@ -27,6 +29,14 @@ CREATE TABLE IF NOT EXISTS /*_*/account_requests (
 	acr_email_token binary(32),
 	-- Expiration date for the user_email_token
 	acr_email_token_expires varbinary(14),
+
+	-- Extra params
+	acr_phone varchar(255) binary NOT NULL default '',
+	acr_pi varchar(255) binary NOT NULL default '',
+	acr_institute varchar(255) binary NOT NULL default '',
+	acr_address mediumblob NOT NULL,
+	acr_legalid varchar(255) binary NOT NULL default '',
+
 	-- A little about this user
 	acr_bio mediumblob NOT NULL,
 	-- Private info for reviewers to look at when considering request
@@ -75,6 +85,10 @@ CREATE TABLE IF NOT EXISTS /*_*/account_credentials (
 	acd_user_id int unsigned NOT NULL,
 	-- Optional 'real name' to be displayed in credit listings
 	acd_real_name varchar(255) binary NOT NULL default '',
+
+	-- add surname toniher
+	acd_real_surname varchar(255) binary NOT NULL default '',
+
 	-- Note: email should be restricted, not public info.
 	-- Same with passwords.
 	acd_email tinytext NOT NULL,
@@ -82,6 +96,14 @@ CREATE TABLE IF NOT EXISTS /*_*/account_credentials (
 	-- validated by returning with a mailed token, this is
 	-- set to the current timestamp.
 	acd_email_authenticated varbinary(14) default NULL,
+
+	-- Extra params
+	acd_phone varchar(255) binary NOT NULL default '',
+	acd_pi varchar(255) binary NOT NULL default '',
+	acd_institute varchar(255) binary NOT NULL default '',
+	acd_address mediumblob NOT NULL,
+	acd_legalid varchar(255) binary NOT NULL default '',
+
 	-- A little about this user
 	acd_bio mediumblob NOT NULL,
 	-- Private info for reviewers to look at when considering request
