@@ -5,6 +5,7 @@ class UserAccountRequest {
 	protected $id;
 	protected $name;
 	protected $realName;
+	protected $realSurName;
 	protected $email;
 	protected $registration;
 	protected $bio;
@@ -28,6 +29,13 @@ class UserAccountRequest {
 	protected $user;
 	protected $comment;
 
+	// Extra
+	protected $institute; // string
+	protected $phone; // string
+	protected $pi; //string
+	protected $legalid; //string
+	protected $address; // string
+
 	private function __construct() {}
 
 	/**
@@ -40,11 +48,17 @@ class UserAccountRequest {
 		$req->id = (int)$row->acr_id;
 		$req->name = $row->acr_name;
 		$req->realName = $row->acr_real_name;
+		$req->realSurName = $row->acr_real_surname;
 		$req->email = $row->acr_email;
 		$req->registration = wfTimestampOrNull( TS_MW, $row->acr_registration );
 		$req->bio = $row->acr_bio;
 		$req->notes = $row->acr_notes;
 		$req->urls = $row->acr_urls;
+		$req->phone = $row->acr_phone;
+		$req->institute = $row->acr_institute;
+		$req->pi = $row->acr_pi;
+		$req->legalid = $row->acr_legalid;
+		$req->address = $row->acr_address;
 		$req->type = (int)$row->acr_type;
 		$req->areas = self::expandAreas( $row->acr_areas );
 		$req->fileName = strlen( $row->acr_filename )
@@ -78,8 +92,14 @@ class UserAccountRequest {
 			: null; // determined on insertOn()
 		$req->name = $fields['name'];
 		$req->realName = $fields['real_name'];
+		$req->realSurName = $fields['real_surname'];
 		$req->email = $fields['email'];
 		$req->registration = wfTimestampOrNull( TS_MW, $fields['registration'] );
+		$req->phone = $fields['phone'];
+		$req->institute = $fields['institute'];
+		$req->legalid = $fields['legalid'];
+		$req->pi = $fields['pi'];
+		$req->address = $fields['address'];
 		$req->bio = $fields['bio'];
 		$req->notes = $fields['notes'];
 		$req->urls = $fields['urls'];
@@ -334,7 +354,13 @@ class UserAccountRequest {
 				'acr_name' 			=> strval( $this->name ),
 				'acr_email' 		=> strval( $this->email ),
 				'acr_real_name' 	=> strval( $this->realName ),
+				'acr_real_surname'	=> strval( $this->realSurName ),
 				'acr_registration' 	=> $dbw->timestamp( $this->registration ),
+				'acr_phone'			=> strval( $this->phone ),
+				'acr_pi'			=> strval( $this->pi ),
+				'acr_institute'		=> strval( $this->institute ),
+				'acr_address'		=> strval( $this->address ),
+				'acr_legalid'		=> strval( $this->legalid ),
 				'acr_bio' 			=> strval( $this->bio ),
 				'acr_notes' 		=> strval( $this->notes ),
 				'acr_urls' 			=> strval( $this->urls ),
