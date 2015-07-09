@@ -825,6 +825,7 @@ class ConfirmAccountsPager extends ReverseChronologicalPager {
 		$conds = $this->mConds;
 		$tables = array( 'account_requests' );
 		$fields = array( 'acr_id', 'acr_name', 'acr_real_name', 'acr_registration', 'acr_held',
+			'acr_real_surname', 'acr_phone', 'acr_pi', 'acr_institute', 'acr_legalid', 'acr_address',
 			'acr_user', 'acr_email', 'acr_email_authenticated', 'acr_bio', 'acr_notes',
 			'acr_urls', 'acr_filename', 'acr_type', 'acr_rejected' );
 		# Stale requests have a user ID of zero
