@@ -3,12 +3,19 @@
 class RequestAccountPage extends SpecialPage {
 	protected $mUsername; // string
 	protected $mRealName; // string
+	protected $mRealSurName; // string
 	protected $mEmail; // string
 	protected $mBio; // string
 	protected $mNotes; // string
 	protected $mUrls; // string
 	protected $mToS; // bool
 	protected $mType; // integer
+	protected $mInstitute; // string
+	protected $mPhone; // string
+	protected $mPI; //string
+	protected $mLegalID; //string
+	protected $mAddress; // string
+
 	/** @var Array */
 	protected $mAreas;
 
@@ -175,6 +182,12 @@ class RequestAccountPage extends SpecialPage {
 				$form .= "<td>" . Xml::input( 'wpRealName', 35, $this->mRealName, array( 'id' => 'wpRealName' ) ) . "</td></tr>\n";
 				$form .= '</table>';
 			}
+			if ( $this->hasItem( 'RealSurName' ) ) {
+				$form .= '<table cellpadding=\'4\'>';
+				$form .= "<tr><td>" . Xml::label( $this->msg( 'requestaccount-realsurname' )->text(), 'wpRealSurName' ) . "</td>";
+				$form .= "<td>" . Xml::input( 'wpRealSurName', 60, $this->mRealSurName, array( 'id' => 'wpRealSurName' ) ) . "</td></tr>\n";
+				$form .= '</table>';
+			}
 			if ( $this->hasItem( 'Biography' ) ) {
 				if ( $wgMakeUserPageFromBio ) {
 					$form .= $this->msg( 'requestaccount-bio-text-i' )->parseAsBlock() . "\n";
@@ -184,6 +197,42 @@ class RequestAccountPage extends SpecialPage {
 				$form .= "<textarea tabindex='1' name='wpBio' id='wpBio' rows='12' cols='80' style='width:100%; background-color:#f9f9f9;'>" .
 					htmlspecialchars( $this->mBio ) . "</textarea></p>\n";
 			}
+
+			if ( $this->hasItem( 'Phone' ) ) {
+				$form .= '<table cellpadding=\'4\'>';
+				$form .= "<tr><td>" . Xml::label( $this->msg( 'requestaccount-phone' )->text(), 'wpPhone' ) . "</td>";
+				$form .= "<td>" . Xml::input( 'wpPhone', 35, $this->mPhone, array( 'id' => 'wpPhone' ) ) . "</td></tr>\n";
+				$form .= '</table>';
+			}
+
+			if ( $this->hasItem( 'PI' ) ) {
+				$form .= '<table cellpadding=\'4\'>';
+				$form .= "<tr><td>" . Xml::label( $this->msg( 'requestaccount-pi' )->text(), 'wpPI' ) . "</td>";
+				$form .= "<td>" . Xml::input( 'wpPI', 70, $this->mPI, array( 'id' => 'wpPI' ) ) . "</td></tr>\n";
+				$form .= '</table>';
+			}
+
+			$institutelist = "http://proteowiki.crg.eu/wiki/Special:Ask/-5B-5BCategory:Institutes-5D-5D/mainlabel%3D/format%3Djson";
+			$context = stream_context_create(array());
+			$jsoninst = json_decode(file_get_contents($institutelist, false, $context), true);
+			$institutes = $jsoninst['items'];		
+
+			$form .= "<td><select id='wpInstitute' name='wpInstitute'>";
+			$selected = "";
+			foreach ($institutes as $institute) {
+				$ivalue = explode (":", $institute["label"]);
+				if ($this->mInstitute == $ivalue[1]) {$selected = "selected='selected'";}
+				$form.="<option $selected >".$ivalue[1]."</option>";
+			}
+			if ($this->mInstitute == 'Other') {$selected = "selected='selected'";}		
+			$form .= "<option $selected >Other</option>";	
+			$form .= "</select></td></tr>";
+
+			$form .= "<tr class='extrafield'><td>" . Xml::label( wfMsgHtml( 'requestaccount-legalid' ), 'wpLegalID' ) . "</td>";
+			$form .= "<td>" . Xml::input( 'wpLegalID', 35, $this->mLegalID, array( 'id' => 'wpLegalID' ) ) . "</td></tr>\n";
+			$form .= '</table>';
+			$form .= "<h2 class='extrafield'>" . wfMsg( 'requestaccount-address' ) . "</h2>\n";
+			$form .= "<textarea tabindex='1' class='extrafield' name='wpAddress' id='wpAddress' rows='12' cols='80' style='width:100%; background-color:#f9f9f9;'>" . htmlspecialchars( $this->mAddress ) . "</textarea>\n";
 			$form .= '</fieldset>';
 		}
 
@@ -260,7 +309,7 @@ class RequestAccountPage extends SpecialPage {
 		# Set some additional data so the AbortNewAccount hook can be
 		# used for more than just username validation
 		$u->setEmail( $this->mEmail );
-		$u->setRealName( $this->mRealName );
+		$u->setRealName( $this->mRealName+"_"+$this->mRealSurName ); //Adding surname
 		# FIXME: Hack! If we don't want captchas for requests, temporarily turn it off!
 		global $wgConfirmAccountCaptchas, $wgCaptchaTriggers;
 		if ( !$wgConfirmAccountCaptchas && isset( $wgCaptchaTriggers ) ) {
@@ -292,8 +341,14 @@ class RequestAccountPage extends SpecialPage {
 			array(
 				'userName'                  => $name,
 				'realName'                  => $this->mRealName,
+				'realSurname' 				=> $this->mRealSurName,
 				'tosAccepted'               => $this->mToS,
 				'email'                     => $this->mEmail,
+				'phone'						=> $this->mPhone,
+				'pi'						=> $this->mPI,
+				'institute'					=> $this->mInstitute,
+				'legalid' 					=> $this->mLegalID,
+				'address' 					=> $this->mAddress,
 				'bio'                       => $this->mBio,
 				'notes'                     => $this->mNotes,
 				'urls'                      => $this->mUrls,
