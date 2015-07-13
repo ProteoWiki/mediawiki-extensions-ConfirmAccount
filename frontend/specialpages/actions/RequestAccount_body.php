@@ -226,8 +226,8 @@ class RequestAccountPage extends SpecialPage {
 
 				$form .= "<tr class='extrafield'><td>" . Xml::label( $this->msg( 'requestaccount-legalid' ), 'wpLegalID' ) . "</td>";
 				$form .= "<td>" . Xml::input( 'wpLegalID', 35, $this->mLegalID, array( 'id' => 'wpLegalID' ) ) . "</td></tr>\n";
-				$form .= "<tr><td cellspan='2'><h2 class='extrafield'>" . wfMsg( 'requestaccount-address' ) . "</h2>\n";
-				$form .= "<textarea tabindex='1' class='extrafield' name='wpAddress' id='wpAddress' rows='12' cols='80' style='width:100%; background-color:#f9f9f9;'>" . htmlspecialchars( $this->mAddress ) . "</textarea></td></tr>";
+				$form .= "<tr><td>" . Xml::label( $this->msg( 'requestaccount-address' ), 'wpAddress' ) . "</td>\n";
+				$form .= "<td><textarea tabindex='1' class='extrafield' name='wpAddress' id='wpAddress' rows='12' cols='80' style='width:100%; background-color:#f9f9f9;'>" . htmlspecialchars( $this->mAddress ) . "</textarea></td></tr>";
 			}
 
 			$form .= '</table>';
