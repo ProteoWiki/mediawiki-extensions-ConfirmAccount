@@ -14,6 +14,13 @@ class ConfirmAccountsPage extends SpecialPage {
 	protected $reqUsername;
 	protected $reqType;
 	protected $reqBio;
+
+	/* extra data toniher */
+	protected $reqCode;
+	protected $reqInstitute;
+	protected $reqPhone;
+	protected $reqPI;
+
 	/** @var array */
 	protected $reqAreas;
 
@@ -84,6 +91,10 @@ class ConfirmAccountsPage extends SpecialPage {
 				}
 				# For removing private info or such from bios
 				$this->reqBio = $request->getText( 'wpNewBio' );
+
+				# Extra info
+				
+
 				# Action the admin is taking and why
 				$this->submitType = $request->getVal( 'wpSubmitType' );
 				$this->reason = $request->getText( 'wpReason' );
@@ -364,6 +375,11 @@ class ConfirmAccountsPage extends SpecialPage {
 					htmlspecialchars( $this->reqBio ) .
 					"</textarea></p>\n";
 			}
+
+			// Adding code - Toniher
+			$form .= "<p>" . $this->msg( 'confirmaccount-code' )->escaped() . "\n";
+			$form .= "<input type='text' name='wpCode' id='wpCode' /></p>\n";
+
 			$form .= '</fieldset>';
 		}
 

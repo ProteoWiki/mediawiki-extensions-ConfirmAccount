@@ -24,6 +24,13 @@ class AccountConfirmSubmission {
 		$this->areas = $params['areas'];
 		$this->action = $params['action'];
 		$this->reason = $params['reason'];
+
+		// More stuff - Toniher
+		$this->institute = $params['institute'];
+		$this->pi = $params['pi'];
+		$this->phone = $params['phone'];
+		$this->code = $params['code'];
+
 	}
 
 	/**
@@ -385,6 +392,10 @@ class AccountConfirmSubmission {
 		if ( $autoText != '' ) {
 			$body .= "\n\n{$autoText}";
 		}
+
+		// Adding other parameters - Toniher specific
+		$body.= "{{User}}";
+		$body.="{{Affiliation|Institute=".$this->mInstitute."|PI=".$this->mPI."|Phone=".$this->mPhone."|Code=".$this->mcode."}}";
 
 		# Add any areas of interest categories...
 		foreach ( ConfirmAccount::getUserAreaConfig() as $name => $conf ) {
