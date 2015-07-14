@@ -47,7 +47,7 @@ class RequestAccountPage extends SpecialPage {
 		$this->mRealName = trim( $request->getText( 'wpRealName' ) );
 		# We may only want real names being used
 		$this->mUsername = !$this->hasItem( 'UserName' )
-			? $this->mRealName."_".$this->mRealSurName //adding Surname
+			? $this->mRealName."_".$this->mRealSurName //adding Surname - Toniher
 			: $request->getText( 'wpUsername' );
 		$this->mUsername = trim( $this->mUsername );
 		# CV/resume attachment...
