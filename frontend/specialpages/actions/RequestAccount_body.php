@@ -74,6 +74,15 @@ class RequestAccountPage extends SpecialPage {
 				$this->mAreas[$name] = $request->getInt( $formName, -1 );
 			}
 		}
+
+		#Extra stuff - Toniher
+		$this->mRealSurName = trim( $request->getText( 'wpRealSurName' ) );
+		$this->mPhone = trim( $request->getText( 'wpPhone' ) );
+		$this->mInstitute = trim( $request->getText( 'wpInstitute' ) );
+		$this->mPI = trim( $request->getText( 'wpPI' ) );
+		$this->mLegalID = trim( $request->getText( 'wpLegalID' ) );
+		$this->mAddress = trim( $request->getText( 'wpAddress' ) );
+
 		# We may be confirming an email address here
 		$emailCode = $request->getText( 'wpEmailToken' );
 
