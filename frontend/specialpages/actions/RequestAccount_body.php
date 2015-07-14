@@ -350,7 +350,7 @@ class RequestAccountPage extends SpecialPage {
 			array(
 				'userName'                  => $name,
 				'realName'                  => $this->mRealName,
-				'realSurname' 				=> $this->mRealSurName,
+				'realSurName' 				=> $this->mRealSurName,
 				'tosAccepted'               => $this->mToS,
 				'email'                     => $this->mEmail,
 				'phone'						=> $this->mPhone,
