@@ -186,6 +186,18 @@ class UserAccountRequest {
 	}
 
 	/**
+	 * @return string
+	*/
+	// New function for Name + Surname
+	public function getNewName() {
+		if ( $this->realName && $this->realSurName ) {
+			return $this->realName."_".$this->realSurName."\n";
+		} else {
+			return $this->name;
+		}
+	}
+
+	/**
 	 * @return sting
 	 */
 	public function getRealName() {
