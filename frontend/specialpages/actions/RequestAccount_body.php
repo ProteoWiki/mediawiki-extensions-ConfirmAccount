@@ -45,6 +45,8 @@ class RequestAccountPage extends SpecialPage {
 		$this->setHeaders();
 
 		$this->mRealName = trim( $request->getText( 'wpRealName' ) );
+		$this->mRealSurName = trim( $request->getText( 'wpRealSurName' ) );
+
 		# We may only want real names being used
 		$this->mUsername = !$this->hasItem( 'UserName' )
 			? $this->mRealName."_".$this->mRealSurName //adding Surname - Toniher
@@ -76,7 +78,6 @@ class RequestAccountPage extends SpecialPage {
 		}
 
 		#Extra stuff - Toniher
-		$this->mRealSurName = trim( $request->getText( 'wpRealSurName' ) );
 		$this->mPhone = trim( $request->getText( 'wpPhone' ) );
 		$this->mInstitute = trim( $request->getText( 'wpInstitute' ) );
 		$this->mPI = trim( $request->getText( 'wpPI' ) );
