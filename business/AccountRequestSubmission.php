@@ -232,7 +232,7 @@ class AccountRequestSubmission {
 
 		# Insert into pending requests...
 		$req = UserAccountRequest::newFromArray( array(
-			'name' 			=> $u->getNewName(), // Adding Name and surname
+			'name' 			=> $u->getName(),
 			'email' 		=> $u->getEmail(),
 			'real_name' 	=> $u->getRealName(),
 			'real_surname'	=> $this->realSurName,
