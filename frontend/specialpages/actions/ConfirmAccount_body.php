@@ -97,7 +97,7 @@ class ConfirmAccountsPage extends SpecialPage {
 				# For removing private info or such from bios
 				$this->reqBio = $request->getText( 'wpNewBio' );
 
-				# Extra info
+				# Extra info - Toniher
 				$this->reqRealName = trim( $request->getText( 'wpNewRealName' ) );
 				$this->reqRealSurName = trim( $request->getText( 'wpNewRealSurName' ) );
 				$this->reqPhone = trim( $request->getText( 'wpNewPhone' ) );
@@ -105,6 +105,9 @@ class ConfirmAccountsPage extends SpecialPage {
 				$this->reqInstitute = trim( $request->getText( 'wpNewInstitute' ) );
 				$this->reqLegalID = trim( $request->getText( 'wpNewLegalID' ) );
 				$this->reqAddress = trim( $request->getText( 'wpNewAddress' ) );
+
+				// Code
+				$this->reqCode = trim( $request->getText( 'wpCode' ) );
 
 				# Action the admin is taking and why
 				$this->submitType = $request->getVal( 'wpSubmitType' );
@@ -569,6 +572,7 @@ class ConfirmAccountsPage extends SpecialPage {
 				'address'  => $this->reqAddress,
 				'bio'      => $this->reqBio,
 				'type'     => $this->reqType,
+				'code'     => $this->reqCode,
 				'areas'    => $areaSet,
 				'action'   => $this->submitType,
 				'reason'   => $this->reason
