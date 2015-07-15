@@ -560,6 +560,13 @@ class ConfirmAccountsPage extends SpecialPage {
 			$this->accountReq,
 			array(
 				'userName' => $this->reqUsername,
+				'realName' => $this->reqRealName,
+				'realSurName' => $this->reqRealSurName,
+				'phone'	   => $this->reqPhone,
+				'institute' => $this->reqInstitute,
+				'pi'	   => $this->reqPI,
+				'legalid'  => $this->reqLegalID,
+				'address'  => $this->reqAddress,
 				'bio'      => $this->reqBio,
 				'type'     => $this->reqType,
 				'areas'    => $areaSet,
