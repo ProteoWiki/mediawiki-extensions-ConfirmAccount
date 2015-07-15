@@ -30,6 +30,8 @@ class AccountConfirmSubmission {
 		$this->pi = $params['pi'];
 		$this->phone = $params['phone'];
 		$this->code = $params['code'];
+		$this->legalid = $params['legalid'];
+		$this->address = $params['address'];
 
 	}
 
@@ -220,8 +222,14 @@ class AccountConfirmSubmission {
 				array(
 					'acd_user_id'             => $user->getID(),
 					'acd_real_name'           => $accReq->getRealName(),
+					'acd_real_surname'        => $accReq->getRealSurName(),
 					'acd_email'               => $accReq->getEmail(),
 					'acd_email_authenticated' => $dbw->timestampOrNull( $authenticated ),
+					'acd_phone'               => $accReq->getPhone(),
+					'acd_pi'                  => $accReq->getPI(),
+					'acd_institute'           => $accReq->getInstitute(),
+					'acd_address'             => $accReq->getAddress(),
+					'acd_legalid'             => $accReq->getLegalID(),
 					'acd_bio'                 => $accReq->getBio(),
 					'acd_notes'               => $accReq->getNotes(),
 					'acd_urls'                => $accReq->getUrls(),
