@@ -93,7 +93,13 @@ class ConfirmAccountsPage extends SpecialPage {
 				$this->reqBio = $request->getText( 'wpNewBio' );
 
 				# Extra info
-				
+				$this->reqRealName = trim( $request->getText( 'wpNewRealName' ) );
+				$this->reqRealSurName = trim( $request->getText( 'wpNewRealSurName' ) );
+				$this->reqPhone = trim( $request->getText( 'wpNewPhone' ) );
+				$this->reqPI = trim( $request->getText( 'wpNewPI' ) );
+				$this->reqInstitute = trim( $request->getText( 'wpNewInstitute' ) );
+				$this->reqLegalID = trim( $request->getText( 'wpNewLegalID' ) );
+				$this->reqAddress = trim( $request->getText( 'wpNewAddress' ) );
 
 				# Action the admin is taking and why
 				$this->submitType = $request->getVal( 'wpSubmitType' );
@@ -590,6 +596,29 @@ class ConfirmAccountsPage extends SpecialPage {
 			$this->reqType = !is_null( $this->reqType )
 				? $this->reqType // overriden by admin
 				: $this->accountReq->getType();
+
+			// Extra content
+			$this->reqRealName = ( $this->reqRealName != '' )
+				? $this->reqRealName // overriden by admin
+				: $this->accountReq->getRealName();
+			$this->reqRealSurName = ( $this->reqRealSurName != '' )
+				? $this->reqRealSurName // overriden by admin
+				: $this->accountReq->getRealSurName();
+			$this->reqPhone = ( $this->reqPhone != '' )
+				? $this->reqPhone // overriden by admin
+				: $this->accountReq->getPhone();
+			$this->reqInstitute = ( $this->reqInstitute != '' )
+				? $this->reqInstitute // overriden by admin
+				: $this->accountReq->getInstitute();
+			$this->reqPI = ( $this->reqPI != '' )
+				? $this->reqPI // overriden by admin
+				: $this->accountReq->getPI();
+			$this->reqLegalID = ( $this->reqLegalID != '' )
+				? $this->reqLegalID // overriden by admin
+				: $this->accountReq->getLegalID();
+		$this->reqAddress = ( $this->reqAddress != '' )
+				? $this->reqAddress // overriden by admin
+				: $this->accountReq->getAddress();
 
 			$origAreas = $this->accountReq->getAreas();
 			foreach ( $this->reqAreas as $area => $within ) {
