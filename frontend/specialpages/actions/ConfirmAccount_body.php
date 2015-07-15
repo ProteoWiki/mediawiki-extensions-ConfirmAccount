@@ -16,10 +16,15 @@ class ConfirmAccountsPage extends SpecialPage {
 	protected $reqBio;
 
 	/* extra data toniher */
+	protected $reqRealName;
+	protected $reqRealSurName;
+
 	protected $reqCode;
 	protected $reqInstitute;
 	protected $reqPhone;
 	protected $reqPI;
+	protected $reqAddress;
+	protected $reqLegalID;
 
 	/** @var array */
 	protected $reqAreas;
