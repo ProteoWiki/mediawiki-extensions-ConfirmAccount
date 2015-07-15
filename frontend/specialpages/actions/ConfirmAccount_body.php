@@ -367,6 +367,18 @@ class ConfirmAccountsPage extends SpecialPage {
 				$form .= '<table cellpadding=\'4\'>';
 				$form .= "<tr><td>" . $this->msg( 'confirmaccount-real' )->escaped() . "</td>";
 				$form .= "<td>" . htmlspecialchars( $accountReq->getRealName() ) . "</td></tr>\n";
+				$form .= "<tr><td>" . $this->msg( 'confirmaccount-realsurname' )->escaped() . "</td>";
+				$form .= "<td>" . htmlspecialchars( $accountReq->getRealSurName() ) . "</td></tr>\n";
+				$form .= "<tr><td>" . $this->msg( 'confirmaccount-phone' )->escaped() . "</td>";
+				$form .= "<td>" . htmlspecialchars( $accountReq->getPhone() ) . "</td></tr>\n";
+				$form .= "<tr><td>" . $this->msg( 'confirmaccount-pi' )->escaped() . "</td>";
+				$form .= "<td>" . htmlspecialchars( $accountReq->getPI() ) . "</td></tr>\n";
+				$form .= "<tr><td>" . $this->msg( 'confirmaccount-institute' )->escaped() . "</td>";
+				$form .= "<td>" . htmlspecialchars( $accountReq->getInstitute() ) . "</td></tr>\n";
+				$form .= "<tr><td>" . $this->msg( 'confirmaccount-legalid' )->escaped() . "</td>";
+				$form .= "<td>" . htmlspecialchars( $accountReq->getLegalID() ) . "</td></tr>\n";
+				$form .= "<tr><td>" . $this->msg( 'confirmaccount-address' )->escaped() . "</td>";
+				$form .= "<td>" . htmlspecialchars( $accountReq->getAddress() ) . "</td></tr>\n";
 				$form .= '</table>';
 			}
 			if ( $this->hasItem( 'Biography' ) ) {
@@ -376,11 +388,6 @@ class ConfirmAccountsPage extends SpecialPage {
 					"</textarea></p>\n";
 			}
 
-			// Adding code - Toniher
-			$form .= "<p>" . $this->msg( 'confirmaccount-code' )->escaped() . "\n";
-			$form .= "<input type='text' name='wpCode' id='wpCode' /></p>\n";
-
-			$form .= '</fieldset>';
 		}
 
 		if ( $this->hasItem( 'CV' ) || $this->hasItem( 'Notes' ) || $this->hasItem( 'Links' ) ) {
@@ -460,6 +467,14 @@ class ConfirmAccountsPage extends SpecialPage {
 		$form .= "<p><textarea name='wpReason' id='wpReason' rows='3' cols='80' style='width:80%; display=block;'>" .
 			htmlspecialchars( $this->reason ) . "</textarea></p></div>\n";
 		$form .= "<p>" . Xml::submitButton( $this->msg( 'confirmaccount-submit' )->text() ) . "</p>\n";
+
+		// Adding code - Toniher
+		$form .= "<p>" . $this->msg( 'confirmaccount-code' )->escaped() . "\n";
+		$form .= "<input type='text' name='wpCode' id='wpCode' /></p>\n";
+
+		$form .= '</fieldset>';
+
+
 		$form .= '</fieldset>';
 
 		$form .= Html::Hidden( 'title', $titleObj->getPrefixedDBKey() ) . "\n";
