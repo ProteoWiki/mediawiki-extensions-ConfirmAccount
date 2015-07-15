@@ -366,19 +366,21 @@ class ConfirmAccountsPage extends SpecialPage {
 			if ( $this->hasItem( 'RealName' ) ) {
 				$form .= '<table cellpadding=\'4\'>';
 				$form .= "<tr><td>" . $this->msg( 'confirmaccount-real' )->escaped() . "</td>";
-				$form .= "<td>" . htmlspecialchars( $accountReq->getRealName() ) . "</td></tr>\n";
+				$form .= "<td>" . Xml::input( 'wpNewRealName', 30, htmlspecialchars( $accountReq->getRealName() , array( 'id' => 'wpNewRealName' ) )  ) . "</td></tr>\n";
 				$form .= "<tr><td>" . $this->msg( 'confirmaccount-realsurname' )->escaped() . "</td>";
-				$form .= "<td>" . htmlspecialchars( $accountReq->getRealSurName() ) . "</td></tr>\n";
+				$form .= "<td>" . Xml::input( 'wpNewRealSurName', 60, htmlspecialchars( $accountReq->getRealSurName() , array( 'id' => 'wpNewRealSurName' ) )  ) . "</td></tr>\n";
 				$form .= "<tr><td>" . $this->msg( 'confirmaccount-phone' )->escaped() . "</td>";
-				$form .= "<td>" . htmlspecialchars( $accountReq->getPhone() ) . "</td></tr>\n";
+				$form .= "<td>" . Xml::input( 'wpNewPhone', 30, htmlspecialchars( $accountReq->getPhone() , array( 'id' => 'wpNewPhone' ) )  ) . "</td></tr>\n";
 				$form .= "<tr><td>" . $this->msg( 'confirmaccount-pi' )->escaped() . "</td>";
-				$form .= "<td>" . htmlspecialchars( $accountReq->getPI() ) . "</td></tr>\n";
+				$form .= "<td>" . Xml::input( 'wpNewPI', 60, htmlspecialchars( $accountReq->getPI() , array( 'id' => 'wpNewPI' ) )  ) . "</td></tr>\n";
 				$form .= "<tr><td>" . $this->msg( 'confirmaccount-institute' )->escaped() . "</td>";
-				$form .= "<td>" . htmlspecialchars( $accountReq->getInstitute() ) . "</td></tr>\n";
+				$form .= "<td>" . Xml::input( 'wpNewInstitute', 50, htmlspecialchars( $accountReq->getInstitute() , array( 'id' => 'wpNewInstitute' ) )  ) . "</td></tr>\n";
 				$form .= "<tr><td>" . $this->msg( 'confirmaccount-legalid' )->escaped() . "</td>";
-				$form .= "<td>" . htmlspecialchars( $accountReq->getLegalID() ) . "</td></tr>\n";
+				$form .= "<td>" . Xml::input( 'wpNewLegalID', 40, htmlspecialchars( $accountReq->getLegalID() , array( 'id' => 'wpNewLegalID' ) )  ) . "</td></tr>\n";
 				$form .= "<tr><td>" . $this->msg( 'confirmaccount-address' )->escaped() . "</td>";
-				$form .= "<td>" . htmlspecialchars( $accountReq->getAddress() ) . "</td></tr>\n";
+				$form .= "<td>" . "<textarea tabindex='1' name='wpNewAddress' id='wpNewAddress' rows='6' cols='80' style='width:100%; background-color:#f9f9f9;'>".htmlspecialchars( $accountReq->getAddress() ) . "</textarea></td></tr>\n";
+
+
 				$form .= '</table>';
 			}
 			if ( $this->hasItem( 'Biography' ) ) {
@@ -463,16 +465,19 @@ class ConfirmAccountsPage extends SpecialPage {
 			array( 'id' => 'submitSpam', 'onclick' => 'document.getElementById("wpComment").style.display="none"' ) );
 		$form .= ' ' . Xml::label( $this->msg( 'confirmaccount-spam' )->text(), 'submitSpam' ) . "</td>\n";
 		$form .= "</tr></table>";
-		$form .= "<div id='wpComment'><p>" . $this->msg( 'confirmaccount-reason' )->escaped() . "</p>\n";
-		$form .= "<p><textarea name='wpReason' id='wpReason' rows='3' cols='80' style='width:80%; display=block;'>" .
-			htmlspecialchars( $this->reason ) . "</textarea></p></div>\n";
-		$form .= "<p>" . Xml::submitButton( $this->msg( 'confirmaccount-submit' )->text() ) . "</p>\n";
+
 
 		// Adding code - Toniher
 		$form .= "<p>" . $this->msg( 'confirmaccount-code' )->escaped() . "\n";
 		$form .= "<input type='text' name='wpCode' id='wpCode' /></p>\n";
 
 		$form .= '</fieldset>';
+
+
+		$form .= "<div id='wpComment'><p>" . $this->msg( 'confirmaccount-reason' )->escaped() . "</p>\n";
+		$form .= "<p><textarea name='wpReason' id='wpReason' rows='3' cols='80' style='width:80%; display=block;'>" .
+			htmlspecialchars( $this->reason ) . "</textarea></p></div>\n";
+		$form .= "<p>" . Xml::submitButton( $this->msg( 'confirmaccount-submit' )->text() ) . "</p>\n";
 
 
 		$form .= '</fieldset>';
