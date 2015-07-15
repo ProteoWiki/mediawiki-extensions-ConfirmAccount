@@ -205,10 +205,53 @@ class UserAccountRequest {
 	}
 
 	/**
+	 * @return sting
+	 */
+	public function getRealSurName() {
+		return $this->realSurName;
+	}
+
+
+	/**
 	 * @return string
 	 */
 	public function getEmail() {
 		return $this->email;
+	}
+
+	/**
+	 * @return sting
+	 */
+	public function getPhone() {
+		return $this->phone;
+	}
+
+	/**
+	 * @return sting
+	 */
+	public function getPI() {
+		return $this->pi;
+	}
+
+	/**
+	 * @return sting
+	 */
+	public function getInstitute() {
+		return $this->institute;
+	}
+
+	/**
+	 * @return sting
+	 */
+	public function getLegalID() {
+		return $this->legalid;
+	}
+
+	/**
+	 * @return sting
+	 */
+	public function getAddress() {
+		return $this->address;
 	}
 
 	/**
