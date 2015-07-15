@@ -9,6 +9,14 @@ class AccountConfirmSubmission {
 	protected $userName;
 	protected $bio;
 	protected $type;
+
+	protected $institute;
+	protected $pi;
+	protected $phone;
+	protected $code;
+	protected $legalid;
+	protected $address;
+
 	/** @var array */
 	protected $areas;
 
@@ -403,7 +411,7 @@ class AccountConfirmSubmission {
 
 		// Adding other parameters - Toniher specific
 		$body.= "{{User}}";
-		$body.="{{Affiliation|Institute=".$this->mInstitute."|PI=".$this->mPI."|Phone=".$this->mPhone."|Code=".$this->mcode."}}";
+		$body.="{{Affiliation|Institute=".$this->institute."|PI=".$this->pi."|Phone=".$this->phone."|Code=".$this->code."}}";
 
 		# Add any areas of interest categories...
 		foreach ( ConfirmAccount::getUserAreaConfig() as $name => $conf ) {
