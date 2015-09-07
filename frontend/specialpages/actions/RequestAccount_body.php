@@ -467,4 +467,4 @@ class RequestAccountPage extends SpecialPage {
 		
 	}
 
-
+}
