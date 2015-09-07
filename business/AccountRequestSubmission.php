@@ -16,7 +16,7 @@ class AccountRequestSubmission {
 	//protected $legalid;
 	//protected $address;
 
-	protected $extra;
+	protected $extra; // Array
 	protected $notes;
 	protected $urls;
 	protected $type;
@@ -34,6 +34,9 @@ class AccountRequestSubmission {
 	protected $attachmentTempPath; // tmp path file was uploaded to FS
 
 	public function __construct( User $requester, array $params ) {
+		
+		global $wgConfirmAccountRequestFormItemsExtra;
+		
 		$this->requester = $requester;
 		$this->userName = trim( $params['userName'] );
 		$this->realName = trim( $params['realName'] );
@@ -41,11 +44,11 @@ class AccountRequestSubmission {
 		$this->tosAccepted = $params['tosAccepted'];
 		$this->email = $params['email'];
 		$this->bio = trim( $params['bio'] );
-		//$this->phone = trim( $params['phone'] );
-		//$this->address = trim( $params['address'] );
-		//$this->legalid = trim( $params['legalid'] );
-		//$this->pi = trim( $params['pi'] );
-		//$this->institute = trim( $params['institute'] );
+
+		foreach ( $wgConfirmAccountRequestFormItemsExtra as $key => $value ) {
+			$this->extra[$key] = $params['extra'][$key];
+		}
+
 		$this->notes = trim( $params['notes'] );
 		$this->urls = trim( $params['urls'] );
 		$this->type = $params['type'];
@@ -238,12 +241,7 @@ class AccountRequestSubmission {
 			'email' 		=> $u->getEmail(),
 			'real_name' 	=> $u->getRealName(),
 			'real_surname'	=> $this->realSurName,
-			//'phone'			=> $this->phone,
-			//'institute'		=> $this->institute,
-			//'pi'			=> $this->pi,
-			//'legalid'		=> $this->legalid,
-			//'address'		=> $this->address,
-			'extra'			=> $this->extra,
+			'extra'			=> $this->extra2JSON( $this->extra ),
 			'registration' 	=> $this->registration,
 			'bio' 			=> $this->bio,
 			'notes' 		=> $this->notes,
@@ -291,5 +289,19 @@ class AccountRequestSubmission {
 		}
 		# Done!
 		return array( true, null );
+	}
+	
+		
+	/** Convert array into JSON
+	 * @return string
+	 */
+	protected function extra2JSON( $array ) {
+		
+		if ( is_array( $array ) ) {
+			return json_encode( $array );
+		} else {
+			return "";
+		}
+		
 	}
 }
