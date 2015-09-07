@@ -19,12 +19,14 @@ class ConfirmAccountsPage extends SpecialPage {
 	protected $reqRealName;
 	protected $reqRealSurName;
 
-	protected $reqCode;
-	protected $reqInstitute;
-	protected $reqPhone;
-	protected $reqPI;
-	protected $reqAddress;
-	protected $reqLegalID;
+	//protected $reqCode;
+	//protected $reqInstitute;
+	//protected $reqPhone;
+	//protected $reqPI;
+	//protected $reqAddress;
+	//protected $reqLegalID;
+
+	protected $reqExtra;
 
 	/** @var array */
 	protected $reqAreas;
@@ -100,14 +102,18 @@ class ConfirmAccountsPage extends SpecialPage {
 				# Extra info - Toniher
 				$this->reqRealName = trim( $request->getText( 'wpNewRealName' ) );
 				$this->reqRealSurName = trim( $request->getText( 'wpNewRealSurName' ) );
-				$this->reqPhone = trim( $request->getText( 'wpNewPhone' ) );
-				$this->reqPI = trim( $request->getText( 'wpNewPI' ) );
-				$this->reqInstitute = trim( $request->getText( 'wpNewInstitute' ) );
-				$this->reqLegalID = trim( $request->getText( 'wpNewLegalID' ) );
-				$this->reqAddress = trim( $request->getText( 'wpNewAddress' ) );
 
-				// Code
-				$this->reqCode = trim( $request->getText( 'wpCode' ) );
+
+				$this->reqExtra = trim( $request->getText( 'wpNewExtra' ) ); // TODO: Check how get extra
+
+				//$this->reqPhone = trim( $request->getText( 'wpNewPhone' ) );
+				//$this->reqPI = trim( $request->getText( 'wpNewPI' ) );
+				//$this->reqInstitute = trim( $request->getText( 'wpNewInstitute' ) );
+				//$this->reqLegalID = trim( $request->getText( 'wpNewLegalID' ) );
+				//$this->reqAddress = trim( $request->getText( 'wpNewAddress' ) );
+				//
+				//// Code
+				//$this->reqCode = trim( $request->getText( 'wpCode' ) );
 
 				# Action the admin is taking and why
 				$this->submitType = $request->getVal( 'wpSubmitType' );
@@ -383,16 +389,16 @@ class ConfirmAccountsPage extends SpecialPage {
 				$form .= "<td>" . Xml::input( 'wpNewRealName', 30, $accountReq->getRealName(), array( 'id' => 'wpNewRealName' )  ) . "</td></tr>\n";
 				$form .= "<tr><td>" . $this->msg( 'confirmaccount-realsurname' )->escaped() . "</td>";
 				$form .= "<td>" . Xml::input( 'wpNewRealSurName', 60, $accountReq->getRealSurName(), array( 'id' => 'wpNewRealSurName' )  ) . "</td></tr>\n";
-				$form .= "<tr><td>" . $this->msg( 'confirmaccount-phone' )->escaped() . "</td>";
-				$form .= "<td>" . Xml::input( 'wpNewPhone', 30, $accountReq->getPhone(), array( 'id' => 'wpNewPhone' )  ) . "</td></tr>\n";
-				$form .= "<tr><td>" . $this->msg( 'confirmaccount-pi' )->escaped() . "</td>";
-				$form .= "<td>" . Xml::input( 'wpNewPI', 60, $accountReq->getPI(), array( 'id' => 'wpNewPI' )  ) . "</td></tr>\n";
-				$form .= "<tr><td>" . $this->msg( 'confirmaccount-institute' )->escaped() . "</td>";
-				$form .= "<td>" . Xml::input( 'wpNewInstitute', 50, $accountReq->getInstitute(), array( 'id' => 'wpNewInstitute' ) ) . "</td></tr>\n";
-				$form .= "<tr><td>" . $this->msg( 'confirmaccount-legalid' )->escaped() . "</td>";
-				$form .= "<td>" . Xml::input( 'wpNewLegalID', 40, $accountReq->getLegalID(), array( 'id' => 'wpNewLegalID' ) ) . "</td></tr>\n";
-				$form .= "<tr><td>" . $this->msg( 'confirmaccount-address' )->escaped() . "</td>";
-				$form .= "<td>" . "<textarea tabindex='1' name='wpNewAddress' id='wpNewAddress' rows='6' cols='80' style='width:100%; background-color:#f9f9f9;'>".htmlspecialchars( $this->reqAddress ) . "</textarea></td></tr>\n";
+				//$form .= "<tr><td>" . $this->msg( 'confirmaccount-phone' )->escaped() . "</td>";
+				//$form .= "<td>" . Xml::input( 'wpNewPhone', 30, $accountReq->getPhone(), array( 'id' => 'wpNewPhone' )  ) . "</td></tr>\n";
+				//$form .= "<tr><td>" . $this->msg( 'confirmaccount-pi' )->escaped() . "</td>";
+				//$form .= "<td>" . Xml::input( 'wpNewPI', 60, $accountReq->getPI(), array( 'id' => 'wpNewPI' )  ) . "</td></tr>\n";
+				//$form .= "<tr><td>" . $this->msg( 'confirmaccount-institute' )->escaped() . "</td>";
+				//$form .= "<td>" . Xml::input( 'wpNewInstitute', 50, $accountReq->getInstitute(), array( 'id' => 'wpNewInstitute' ) ) . "</td></tr>\n";
+				//$form .= "<tr><td>" . $this->msg( 'confirmaccount-legalid' )->escaped() . "</td>";
+				//$form .= "<td>" . Xml::input( 'wpNewLegalID', 40, $accountReq->getLegalID(), array( 'id' => 'wpNewLegalID' ) ) . "</td></tr>\n";
+				//$form .= "<tr><td>" . $this->msg( 'confirmaccount-address' )->escaped() . "</td>";
+				//$form .= "<td>" . "<textarea tabindex='1' name='wpNewAddress' id='wpNewAddress' rows='6' cols='80' style='width:100%; background-color:#f9f9f9;'>".htmlspecialchars( $this->reqAddress ) . "</textarea></td></tr>\n";
 
 
 				$form .= '</table>';
@@ -482,8 +488,8 @@ class ConfirmAccountsPage extends SpecialPage {
 
 
 		// Adding code - Toniher
-		$form .= "<p>" . $this->msg( 'confirmaccount-code' )->escaped() . "\n";
-		$form .= "<input type='text' name='wpCode' id='wpCode' /></p>\n";
+		//$form .= "<p>" . $this->msg( 'confirmaccount-code' )->escaped() . "\n";
+		//$form .= "<input type='text' name='wpCode' id='wpCode' /></p>\n";
 
 		$form .= '</fieldset>';
 
@@ -565,14 +571,15 @@ class ConfirmAccountsPage extends SpecialPage {
 				'userName' => $this->reqUsername,
 				'realName' => $this->reqRealName,
 				'realSurName' => $this->reqRealSurName,
-				'phone'	   => $this->reqPhone,
-				'institute' => $this->reqInstitute,
-				'pi'	   => $this->reqPI,
-				'legalid'  => $this->reqLegalID,
-				'address'  => $this->reqAddress,
+				//'phone'	   => $this->reqPhone,
+				//'institute' => $this->reqInstitute,
+				//'pi'	   => $this->reqPI,
+				//'legalid'  => $this->reqLegalID,
+				//'address'  => $this->reqAddress,
+				'extra'	   => $this->reqExtra,
 				'bio'      => $this->reqBio,
 				'type'     => $this->reqType,
-				'code'     => $this->reqCode,
+				//'code'     => $this->reqCode,
 				'areas'    => $areaSet,
 				'action'   => $this->submitType,
 				'reason'   => $this->reason
@@ -620,21 +627,21 @@ class ConfirmAccountsPage extends SpecialPage {
 			$this->reqRealSurName = ( $this->reqRealSurName != '' )
 				? $this->reqRealSurName // overriden by admin
 				: $this->accountReq->getRealSurName();
-			$this->reqPhone = ( $this->reqPhone != '' )
-				? $this->reqPhone // overriden by admin
-				: $this->accountReq->getPhone();
-			$this->reqInstitute = ( $this->reqInstitute != '' )
-				? $this->reqInstitute // overriden by admin
-				: $this->accountReq->getInstitute();
-			$this->reqPI = ( $this->reqPI != '' )
-				? $this->reqPI // overriden by admin
-				: $this->accountReq->getPI();
-			$this->reqLegalID = ( $this->reqLegalID != '' )
-				? $this->reqLegalID // overriden by admin
-				: $this->accountReq->getLegalID();
-		$this->reqAddress = ( $this->reqAddress != '' )
-				? $this->reqAddress // overriden by admin
-				: $this->accountReq->getAddress();
+			//$this->reqPhone = ( $this->reqPhone != '' )
+			//	? $this->reqPhone // overriden by admin
+			//	: $this->accountReq->getPhone();
+			//$this->reqInstitute = ( $this->reqInstitute != '' )
+			//	? $this->reqInstitute // overriden by admin
+			//	: $this->accountReq->getInstitute();
+			//$this->reqPI = ( $this->reqPI != '' )
+			//	? $this->reqPI // overriden by admin
+			//	: $this->accountReq->getPI();
+			//$this->reqLegalID = ( $this->reqLegalID != '' )
+			//	? $this->reqLegalID // overriden by admin
+			//	: $this->accountReq->getLegalID();
+			//$this->reqAddress = ( $this->reqAddress != '' )
+			//	? $this->reqAddress // overriden by admin
+			//	: $this->accountReq->getAddress();
 
 			$origAreas = $this->accountReq->getAreas();
 			foreach ( $this->reqAreas as $area => $within ) {
@@ -906,7 +913,8 @@ class ConfirmAccountsPager extends ReverseChronologicalPager {
 		$conds = $this->mConds;
 		$tables = array( 'account_requests' );
 		$fields = array( 'acr_id', 'acr_name', 'acr_real_name', 'acr_registration', 'acr_held',
-			'acr_real_surname', 'acr_phone', 'acr_pi', 'acr_institute', 'acr_legalid', 'acr_address',
+			//'acr_real_surname', 'acr_phone', 'acr_pi', 'acr_institute', 'acr_legalid', 'acr_address',
+			'acr_real_surname', 'acr_extra',
 			'acr_user', 'acr_email', 'acr_email_authenticated', 'acr_bio', 'acr_notes',
 			'acr_urls', 'acr_filename', 'acr_type', 'acr_rejected' );
 		# Stale requests have a user ID of zero

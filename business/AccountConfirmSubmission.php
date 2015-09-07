@@ -10,12 +10,15 @@ class AccountConfirmSubmission {
 	protected $bio;
 	protected $type;
 
-	protected $institute;
-	protected $pi;
-	protected $phone;
-	protected $code;
-	protected $legalid;
-	protected $address;
+	//protected $institute;
+	//protected $pi;
+	//protected $phone;
+	//protected $code;
+	//protected $legalid;
+	//protected $address;
+
+	// Extra stuff
+	protected $extra;
 
 	/** @var array */
 	protected $areas;
@@ -34,13 +37,13 @@ class AccountConfirmSubmission {
 		$this->reason = $params['reason'];
 
 		// More stuff - Toniher
-		$this->institute = $params['institute'];
-		$this->pi = $params['pi'];
-		$this->phone = $params['phone'];
-		$this->code = $params['code'];
-		$this->legalid = $params['legalid'];
-		$this->address = $params['address'];
-
+		//$this->institute = $params['institute'];
+		//$this->pi = $params['pi'];
+		//$this->phone = $params['phone'];
+		//$this->code = $params['code'];
+		//$this->legalid = $params['legalid'];
+		//$this->address = $params['address'];
+		$this->extra = $params['extra']; // TODO: Get how to retrieve this
 	}
 
 	/**
@@ -233,11 +236,12 @@ class AccountConfirmSubmission {
 					'acd_real_surname'        => $accReq->getRealSurName(),
 					'acd_email'               => $accReq->getEmail(),
 					'acd_email_authenticated' => $dbw->timestampOrNull( $authenticated ),
-					'acd_phone'               => $accReq->getPhone(),
-					'acd_pi'                  => $accReq->getPI(),
-					'acd_institute'           => $accReq->getInstitute(),
-					'acd_address'             => $accReq->getAddress(),
-					'acd_legalid'             => $accReq->getLegalID(),
+					//'acd_phone'               => $accReq->getPhone(),
+					//'acd_pi'                  => $accReq->getPI(),
+					//'acd_institute'           => $accReq->getInstitute(),
+					//'acd_address'             => $accReq->getAddress(),
+					//'acd_legalid'             => $accReq->getLegalID(),
+					'acd_extra'				  => $accReq->getExtra(),
 					'acd_bio'                 => $accReq->getBio(),
 					'acd_notes'               => $accReq->getNotes(),
 					'acd_urls'                => $accReq->getUrls(),
@@ -409,7 +413,7 @@ class AccountConfirmSubmission {
 			$body .= "\n\n{$autoText}";
 		}
 
-		// Adding other parameters - Toniher specific
+		// TODO: Adding other parameters - Toniher specific -> Apply extra here
 		$body.= "{{User}}";
 		$body.="{{Affiliation|Institute=".$this->institute."|PI=".$this->pi."|Phone=".$this->phone."|Code=".$this->code."}}";
 

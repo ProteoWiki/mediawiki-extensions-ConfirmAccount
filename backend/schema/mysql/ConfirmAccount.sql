@@ -30,13 +30,6 @@ CREATE TABLE IF NOT EXISTS /*_*/account_requests (
 	-- Expiration date for the user_email_token
 	acr_email_token_expires varbinary(14),
 
-	-- Extra params
-	acr_phone varchar(255) binary NOT NULL default '',
-	acr_pi varchar(255) binary NOT NULL default '',
-	acr_institute varchar(255) binary NOT NULL default '',
-	acr_address mediumblob NOT NULL,
-	acr_legalid varchar(255) binary NOT NULL default '',
-
 	-- A little about this user
 	acr_bio mediumblob NOT NULL,
 	-- Private info for reviewers to look at when considering request
@@ -68,7 +61,11 @@ CREATE TABLE IF NOT EXISTS /*_*/account_requests (
 	-- The user who rejected/held it
 	acr_user int unsigned NOT NULL default 0,
 	-- Reason
-	acr_comment varchar(255) NOT NULL default ''
+	acr_comment varchar(255) NOT NULL default '',
+
+	-- Extra params
+	acr_extra text NOT NULL default '';
+
 ) /*$wgDBTableOptions*/;
 
 CREATE UNIQUE INDEX /*i*/acr_name ON /*_*/account_requests (acr_name);
@@ -97,13 +94,6 @@ CREATE TABLE IF NOT EXISTS /*_*/account_credentials (
 	-- set to the current timestamp.
 	acd_email_authenticated varbinary(14) default NULL,
 
-	-- Extra params
-	acd_phone varchar(255) binary NOT NULL default '',
-	acd_pi varchar(255) binary NOT NULL default '',
-	acd_institute varchar(255) binary NOT NULL default '',
-	acd_address mediumblob NOT NULL,
-	acd_legalid varchar(255) binary NOT NULL default '',
-
 	-- A little about this user
 	acd_bio mediumblob NOT NULL,
 	-- Private info for reviewers to look at when considering request
@@ -130,6 +120,10 @@ CREATE TABLE IF NOT EXISTS /*_*/account_credentials (
 	acd_user int unsigned NOT NULL default 0,
 	-- Reason given in email
 	acd_comment varchar(255) NOT NULL default ''
+
+	-- Extra params
+	acd_extra text NOT NULL default '';
+
 ) /*$wgDBTableOptions*/;
 
 CREATE UNIQUE INDEX /*i*/acd_user_id ON /*_*/account_credentials (acd_user_id,acd_id);

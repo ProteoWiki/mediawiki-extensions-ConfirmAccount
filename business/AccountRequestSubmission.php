@@ -10,11 +10,13 @@ class AccountRequestSubmission {
 	protected $tosAccepted;
 	protected $email;
 	protected $bio;
-	protected $phone;
-	protected $pi;
-	protected $institute;
-	protected $legalid;
-	protected $address;
+	//protected $phone;
+	//protected $pi;
+	//protected $institute;
+	//protected $legalid;
+	//protected $address;
+
+	protected $extra;
 	protected $notes;
 	protected $urls;
 	protected $type;
@@ -39,11 +41,11 @@ class AccountRequestSubmission {
 		$this->tosAccepted = $params['tosAccepted'];
 		$this->email = $params['email'];
 		$this->bio = trim( $params['bio'] );
-		$this->phone = trim( $params['phone'] );
-		$this->address = trim( $params['address'] );
-		$this->legalid = trim( $params['legalid'] );
-		$this->pi = trim( $params['pi'] );
-		$this->institute = trim( $params['institute'] );
+		//$this->phone = trim( $params['phone'] );
+		//$this->address = trim( $params['address'] );
+		//$this->legalid = trim( $params['legalid'] );
+		//$this->pi = trim( $params['pi'] );
+		//$this->institute = trim( $params['institute'] );
 		$this->notes = trim( $params['notes'] );
 		$this->urls = trim( $params['urls'] );
 		$this->type = $params['type'];
@@ -236,11 +238,12 @@ class AccountRequestSubmission {
 			'email' 		=> $u->getEmail(),
 			'real_name' 	=> $u->getRealName(),
 			'real_surname'	=> $this->realSurName,
-			'phone'			=> $this->phone,
-			'institute'		=> $this->institute,
-			'pi'			=> $this->pi,
-			'legalid'		=> $this->legalid,
-			'address'		=> $this->address,
+			//'phone'			=> $this->phone,
+			//'institute'		=> $this->institute,
+			//'pi'			=> $this->pi,
+			//'legalid'		=> $this->legalid,
+			//'address'		=> $this->address,
+			'extra'			=> $this->extra,
 			'registration' 	=> $this->registration,
 			'bio' 			=> $this->bio,
 			'notes' 		=> $this->notes,

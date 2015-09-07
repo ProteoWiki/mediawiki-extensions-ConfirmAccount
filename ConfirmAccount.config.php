@@ -43,6 +43,14 @@ $wgConfirmAccountRequestFormItems = array(
 	'TermsOfService'  => array( 'enabled' => true ),
 );
 
+# Which additional form elements to show at Special:RequestAccount - Toniher
+$wgConfirmAccountRequestFormItemsExtra = array(
+	'yearsExperience' => array( "label" => "Years of Experience", "type" => "numeric", "template" => "User", "param" => "Years_Experience", "size" => 5 ),
+	'jobTitle' => array( "label" => "Job Title", "type" => "numeric", "template" => "User", "param" => "Job_Title", "size" => 35 ),
+	'researchGroup' => array( "label" => "Research Group", "type" => "numeric", "template" => "User", "param" => "Research_Group", "size" => 50 )
+);
+
+
 # If files can be attached, what types can be used? (MIME data is checked)
 $wgAccountRequestExts = array( 'txt', 'pdf', 'doc', 'latex', 'rtf', 'text', 'wp', 'wpd', 'sxw' );
 

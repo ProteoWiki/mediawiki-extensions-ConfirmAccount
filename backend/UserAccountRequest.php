@@ -30,11 +30,7 @@ class UserAccountRequest {
 	protected $comment;
 
 	// Extra
-	protected $institute; // string
-	protected $phone; // string
-	protected $pi; //string
-	protected $legalid; //string
-	protected $address; // string
+	protected $extra; // string
 
 	private function __construct() {}
 
@@ -54,11 +50,7 @@ class UserAccountRequest {
 		$req->bio = $row->acr_bio;
 		$req->notes = $row->acr_notes;
 		$req->urls = $row->acr_urls;
-		$req->phone = $row->acr_phone;
-		$req->institute = $row->acr_institute;
-		$req->pi = $row->acr_pi;
-		$req->legalid = $row->acr_legalid;
-		$req->address = $row->acr_address;
+		$req->extra = $row->acr_extra;
 		$req->type = (int)$row->acr_type;
 		$req->areas = self::expandAreas( $row->acr_areas );
 		$req->fileName = strlen( $row->acr_filename )
@@ -87,6 +79,8 @@ class UserAccountRequest {
 	public static function newFromArray( array $fields ) {
 		$req = new self();
 
+		global $wgConfirmAccountRequestFormItemsExtra;
+
 		$req->id = isset( $fields['id'] )
 			? (int)$fields['id']
 			: null; // determined on insertOn()
@@ -95,11 +89,11 @@ class UserAccountRequest {
 		$req->realSurName = $fields['real_surname'];
 		$req->email = $fields['email'];
 		$req->registration = wfTimestampOrNull( TS_MW, $fields['registration'] );
-		$req->phone = $fields['phone'];
-		$req->institute = $fields['institute'];
-		$req->legalid = $fields['legalid'];
-		$req->pi = $fields['pi'];
-		$req->address = $fields['address'];
+
+		foreach ( $wgConfirmAccountRequestFormItemsExtra as $key => $value ) {
+			$req->extra[$key] = $fields['extra'][$key];
+		}
+
 		$req->bio = $fields['bio'];
 		$req->notes = $fields['notes'];
 		$req->urls = $fields['urls'];
@@ -211,48 +205,13 @@ class UserAccountRequest {
 		return $this->realSurName;
 	}
 
-
-	/**
-	 * @return string
-	 */
-	public function getEmail() {
-		return $this->email;
-	}
-
 	/**
 	 * @return sting
 	 */
-	public function getPhone() {
-		return $this->phone;
+	public function getExtra( $param ) {
+		return $this->realSurName;
 	}
 
-	/**
-	 * @return sting
-	 */
-	public function getPI() {
-		return $this->pi;
-	}
-
-	/**
-	 * @return sting
-	 */
-	public function getInstitute() {
-		return $this->institute;
-	}
-
-	/**
-	 * @return sting
-	 */
-	public function getLegalID() {
-		return $this->legalid;
-	}
-
-	/**
-	 * @return sting
-	 */
-	public function getAddress() {
-		return $this->address;
-	}
 
 	/**
 	 * @return string TS_MW timestamp
@@ -411,11 +370,7 @@ class UserAccountRequest {
 				'acr_real_name' 	=> strval( $this->realName ),
 				'acr_real_surname'	=> strval( $this->realSurName ),
 				'acr_registration' 	=> $dbw->timestamp( $this->registration ),
-				'acr_phone'			=> strval( $this->phone ),
-				'acr_pi'			=> strval( $this->pi ),
-				'acr_institute'		=> strval( $this->institute ),
-				'acr_address'		=> strval( $this->address ),
-				'acr_legalid'		=> strval( $this->legalid ),
+				'acr_extra'			=> $this->extra2JSON( strval( $this->extra ) ),
 				'acr_bio' 			=> strval( $this->bio ),
 				'acr_notes' 		=> strval( $this->notes ),
 				'acr_urls' 			=> strval( $this->urls ),

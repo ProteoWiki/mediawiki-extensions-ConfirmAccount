@@ -10,11 +10,7 @@ class RequestAccountPage extends SpecialPage {
 	protected $mUrls; // string
 	protected $mToS; // bool
 	protected $mType; // integer
-	protected $mInstitute; // string
-	protected $mPhone; // string
-	protected $mPI; //string
-	protected $mLegalID; //string
-	protected $mAddress; // string
+	protected $mExtra; // associative array
 
 	/** @var Array */
 	protected $mAreas;
@@ -31,6 +27,7 @@ class RequestAccountPage extends SpecialPage {
 
 	function execute( $par ) {
 		global $wgAccountRequestTypes;
+		global $wgConfirmAccountRequestFormItemsExtra; // Extra params
 
 		$reqUser = $this->getUser();
 		$request = $this->getRequest();
@@ -78,11 +75,11 @@ class RequestAccountPage extends SpecialPage {
 		}
 
 		#Extra stuff - Toniher
-		$this->mPhone = trim( $request->getText( 'wpPhone' ) );
-		$this->mInstitute = trim( $request->getText( 'wpInstitute' ) );
-		$this->mPI = trim( $request->getText( 'wpPI' ) );
-		$this->mLegalID = trim( $request->getText( 'wpLegalID' ) );
-		$this->mAddress = trim( $request->getText( 'wpAddress' ) );
+		foreach ( $wgConfirmAccountRequestFormItemsExtra as $key => $value ) {
+
+			$formValue = "wpExtra-".$key;
+			$this->mExtra[$key] = trim( $request->getText( $formValue ) ) ;
+		}
 
 		# We may be confirming an email address here
 		$emailCode = $request->getText( 'wpEmailToken' );
@@ -106,6 +103,7 @@ class RequestAccountPage extends SpecialPage {
 
 	protected function showForm( $msg = '', $forgotFile = 0 ) {
 		global $wgAccountRequestTypes, $wgMakeUserPageFromBio;
+		global $wgConfirmAccountRequestFormItemsExtra;
 
 		$reqUser = $this->getUser();
 
@@ -206,43 +204,26 @@ class RequestAccountPage extends SpecialPage {
 					htmlspecialchars( $this->mBio ) . "</textarea></p>\n";
 			}
 
-			if ( $this->hasItem( 'Phone' ) ) {
-				$form .= "<tr><td>" . Xml::label( $this->msg( 'requestaccount-phone' )->text(), 'wpPhone' ) . "</td>";
-				$form .= "<td>" . Xml::input( 'wpPhone', 35, $this->mPhone, array( 'id' => 'wpPhone' ) ) . "</td></tr>\n";
-			}
+			// TODO: Change UI here
 
-			if ( $this->hasItem( 'PI' ) ) {
-				$form .= '<table cellpadding=\'4\'>';
-				$form .= "<tr><td>" . Xml::label( $this->msg( 'requestaccount-pi' )->text(), 'wpPI' ) . "</td>";
-				$form .= "<td>" . Xml::input( 'wpPI', 70, $this->mPI, array( 'id' => 'wpPI' ) ) . "</td></tr>\n";
-			}
-
-			if ( $this->hasItem( 'Institute' ) ) { 
-				$institutelist = "http://proteowiki.crg.eu/wiki/Special:Ask/-5B-5BCategory:Institutes-5D-5D/mainlabel%3D/format%3Djson";
-				$context = stream_context_create(array());
-				$jsoninst = json_decode(file_get_contents($institutelist, false, $context), true);
-				$institutes = $jsoninst['items'];
+			foreach ( $wgConfirmAccountRequestFormItemsExtra as $key => $value ) {
 	
-				$form .= "<tr><td>". Xml::label( $this->msg( 'requestaccount-institute' )->text(), 'wpInstitute' ) ."</td><td><select id='wpInstitute' name='wpInstitute'>";
-				$selected = "";
-				foreach ($institutes as $institute) {
-					$ivalue = explode (":", $institute["label"]);
-					if ($this->mInstitute == $ivalue[1]) {$selected = "selected='selected'";}
-					$form.="<option $selected >".$ivalue[1]."</option>";
+				$formValue = "wpExtra-".$key;
+				$label = $key;
+				$size = 35;
+				if ( array_key_exists( "label", $value ) ) {
+					$label = $value["label"];
 				}
-				if ($this->mInstitute == 'Other') {$selected = "selected='selected'";}		
-				$form .= "<option $selected >Other</option>";	
-				$form .= "</select></td></tr>";
+				if ( array_key_exists( "size", $value ) ) {
+					$size = $value["size"];
+				}
 
-				$form .= "<tr class='extrafield'><td>" . Xml::label( $this->msg( 'requestaccount-legalid' ), 'wpLegalID' ) . "</td>";
-				$form .= "<td>" . Xml::input( 'wpLegalID', 35, $this->mLegalID, array( 'id' => 'wpLegalID' ) ) . "</td></tr>\n";
-				$form .= "<tr><td>" . Xml::label( $this->msg( 'requestaccount-address' ), 'wpAddress' ) . "</td>\n";
-				$form .= "<td><textarea tabindex='1' class='extrafield' name='wpAddress' id='wpAddress' rows='12' cols='80' style='width:100%; background-color:#f9f9f9;'>" . htmlspecialchars( $this->mAddress ) . "</textarea></td></tr>";
+				$form .= "<tr><td>" . Xml::label( $label, $formValue ) . "</td>";
+				$form .= "<td>" . Xml::input( $formValue, $size, $this->mExtra[$key], array( 'id' => $formValue ) ) . "</td></tr>\n";
+
 			}
 
 			$form .= '</table>';
-
-
 			$form .= '</fieldset>';
 		}
 
@@ -354,11 +335,7 @@ class RequestAccountPage extends SpecialPage {
 				'realSurName' 				=> $this->mRealSurName,
 				'tosAccepted'               => $this->mToS,
 				'email'                     => $this->mEmail,
-				'phone'						=> $this->mPhone,
-				'pi'						=> $this->mPI,
-				'institute'					=> $this->mInstitute,
-				'legalid' 					=> $this->mLegalID,
-				'address' 					=> $this->mAddress,
+				'extra'						=> $this->extra2JSON( $this->mExtra ), //TODO: extra 2 JSON
 				'bio'                       => $this->mBio,
 				'notes'                     => $this->mNotes,
 				'urls'                      => $this->mUrls,
@@ -475,5 +452,10 @@ class RequestAccountPage extends SpecialPage {
 
 	protected function getGroupName() {
 		return 'login';
+	}
+
+	protected function extra2JSON( $array ) {
+
+
 	}
 }
