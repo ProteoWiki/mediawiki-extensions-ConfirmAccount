@@ -453,9 +453,18 @@ class RequestAccountPage extends SpecialPage {
 	protected function getGroupName() {
 		return 'login';
 	}
-
+	
+	/** Convert array into JSON
+	 * @return string
+	 */
 	protected function extra2JSON( $array ) {
-
-
+		
+		if ( is_array( $array ) ) {
+			return json_encode( $array );
+		} else {
+			return "";
+		}
+		
 	}
-}
+
+

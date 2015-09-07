@@ -208,8 +208,8 @@ class UserAccountRequest {
 	/**
 	 * @return sting
 	 */
-	public function getExtra( $param ) {
-		return $this->realSurName;
+	public function getExtra() {
+		return $this->extra;
 	}
 
 
@@ -370,7 +370,7 @@ class UserAccountRequest {
 				'acr_real_name' 	=> strval( $this->realName ),
 				'acr_real_surname'	=> strval( $this->realSurName ),
 				'acr_registration' 	=> $dbw->timestamp( $this->registration ),
-				'acr_extra'			=> $this->extra2JSON( strval( $this->extra ) ),
+				'acr_extra'			=> $this->extra2JSON( $this->extra ),
 				'acr_bio' 			=> strval( $this->bio ),
 				'acr_notes' 		=> strval( $this->notes ),
 				'acr_urls' 			=> strval( $this->urls ),
@@ -520,4 +520,19 @@ class UserAccountRequest {
 	public static function relPathFromKey( $key ) {
 		return "{$key[0]}/{$key[0]}{$key[1]}/{$key[0]}{$key[1]}{$key[2]}/{$key}";
 	}
+	
+	
+	/** Convert array into JSON
+	 * @return string
+	 */
+	protected function extra2JSON( $array ) {
+		
+		if ( is_array( $array ) ) {
+			return json_encode( $array );
+		} else {
+			return "";
+		}
+		
+	}
+	
 }
