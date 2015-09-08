@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS /*_*/account_credentials (
 	-- The user who accepted it
 	acd_user int unsigned NOT NULL default 0,
 	-- Reason given in email
-	acd_comment varchar(255) NOT NULL default ''
+	acd_comment varchar(255) NOT NULL default '',
 
 	-- Extra params
 	acd_extra text NOT NULL default '';
