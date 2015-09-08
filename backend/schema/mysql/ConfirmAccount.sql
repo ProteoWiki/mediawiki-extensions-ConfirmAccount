@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS /*_*/account_requests (
 	acr_comment varchar(255) NOT NULL default '',
 
 	-- Extra params
-	acr_extra text NOT NULL default '';
+	acr_extra text NOT NULL default ''
 
 ) /*$wgDBTableOptions*/;
 
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS /*_*/account_credentials (
 	acd_comment varchar(255) NOT NULL default '',
 
 	-- Extra params
-	acd_extra text NOT NULL default '';
+	acd_extra text NOT NULL default ''
 
 ) /*$wgDBTableOptions*/;
 
