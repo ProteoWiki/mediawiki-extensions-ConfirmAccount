@@ -45,8 +45,15 @@ class AccountRequestSubmission {
 		$this->email = $params['email'];
 		$this->bio = trim( $params['bio'] );
 
-		foreach ( $wgConfirmAccountRequestFormItemsExtra as $key => $value ) {
-			$this->extra[$key] = $params['extra'][$key];
+		$extraVals = json_decode( $params['extra'] );
+		foreach ( $extraVals as $key => $value ) {
+			if ( is_integer( $value ) ) {
+				$value = (int)$value;
+			}
+			if ( is_float( $value ) ) {
+				$value = (float)$value;
+			}
+			$this->extra[$key] = $value;
 		}
 
 		$this->notes = trim( $params['notes'] );
@@ -160,6 +167,7 @@ class AccountRequestSubmission {
 			}
 		}
 		# Check if already in use
+
 		if ( 0 != $u->idForName() || $wgAuth->userExists( $u->getName() ) ) {
 			return array(
 				'accountreq_username_exists',
@@ -259,6 +267,7 @@ class AccountRequestSubmission {
 			'xff'           => $this->xff,
 			'agent'         => $this->agent
 		) );
+
 		$req->insertOn();
 		# Send confirmation, required!
 		$result = ConfirmAccount::sendConfirmationMail( $u, $this->ip, $token, $expires );

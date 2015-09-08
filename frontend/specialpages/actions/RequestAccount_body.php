@@ -194,17 +194,6 @@ class RequestAccountPage extends SpecialPage {
 				$form .= "<tr><td>" . Xml::label( $this->msg( 'requestaccount-realsurname' )->text(), 'wpRealSurName' ) . "</td>";
 				$form .= "<td>" . Xml::input( 'wpRealSurName', 60, $this->mRealSurName, array( 'id' => 'wpRealSurName' ) ) . "</td></tr>\n";
 			}
-			if ( $this->hasItem( 'Biography' ) ) {
-				if ( $wgMakeUserPageFromBio ) {
-					$form .= $this->msg( 'requestaccount-bio-text-i' )->parseAsBlock() . "\n";
-				}
-				$form .= $this->msg( 'requestaccount-bio-text' )->parseAsBlock() . "\n";
-				$form .= "<p>" . $this->msg( 'requestaccount-bio' )->parse() . "\n";
-				$form .= "<textarea tabindex='1' name='wpBio' id='wpBio' rows='12' cols='80' style='width:100%; background-color:#f9f9f9;'>" .
-					htmlspecialchars( $this->mBio ) . "</textarea></p>\n";
-			}
-
-			// TODO: Change UI here
 
 			foreach ( $wgConfirmAccountRequestFormItemsExtra as $key => $value ) {
 	
@@ -221,6 +210,16 @@ class RequestAccountPage extends SpecialPage {
 				$form .= "<tr><td>" . Xml::label( $label, $formValue ) . "</td>";
 				$form .= "<td>" . Xml::input( $formValue, $size, $this->mExtra[$key], array( 'id' => $formValue ) ) . "</td></tr>\n";
 
+			}
+
+			if ( $this->hasItem( 'Biography' ) ) {
+				if ( $wgMakeUserPageFromBio ) {
+					$form .= $this->msg( 'requestaccount-bio-text-i' )->parseAsBlock() . "\n";
+				}
+				$form .= $this->msg( 'requestaccount-bio-text' )->parseAsBlock() . "\n";
+				$form .= "<p>" . $this->msg( 'requestaccount-bio' )->parse() . "\n";
+				$form .= "<textarea tabindex='1' name='wpBio' id='wpBio' rows='12' cols='80' style='width:100%; background-color:#f9f9f9;'>" .
+					htmlspecialchars( $this->mBio ) . "</textarea></p>\n";
 			}
 
 			$form .= '</table>';

@@ -90,8 +90,9 @@ class UserAccountRequest {
 		$req->email = $fields['email'];
 		$req->registration = wfTimestampOrNull( TS_MW, $fields['registration'] );
 
-		foreach ( $wgConfirmAccountRequestFormItemsExtra as $key => $value ) {
-			$req->extra[$key] = $fields['extra'][$key];
+		$extrafields = json_decode( $fields["extra"] );
+		foreach ( get_object_vars( $extrafields ) as $key => $value ) {
+			$req->extra[$key] = $value;
 		}
 
 		$req->bio = $fields['bio'];
