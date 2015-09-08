@@ -10,13 +10,6 @@ class AccountConfirmSubmission {
 	protected $bio;
 	protected $type;
 
-	//protected $institute;
-	//protected $pi;
-	//protected $phone;
-	//protected $code;
-	//protected $legalid;
-	//protected $address;
-
 	// Extra stuff
 	protected $extra;
 
@@ -37,13 +30,7 @@ class AccountConfirmSubmission {
 		$this->reason = $params['reason'];
 
 		// More stuff - Toniher
-		//$this->institute = $params['institute'];
-		//$this->pi = $params['pi'];
-		//$this->phone = $params['phone'];
-		//$this->code = $params['code'];
-		//$this->legalid = $params['legalid'];
-		//$this->address = $params['address'];
-		$this->extra = $params['extra']; // TODO: Get how to retrieve this
+		$this->extra = $params['extra'];
 	}
 
 	/**
@@ -236,12 +223,7 @@ class AccountConfirmSubmission {
 					'acd_real_surname'        => $accReq->getRealSurName(),
 					'acd_email'               => $accReq->getEmail(),
 					'acd_email_authenticated' => $dbw->timestampOrNull( $authenticated ),
-					//'acd_phone'               => $accReq->getPhone(),
-					//'acd_pi'                  => $accReq->getPI(),
-					//'acd_institute'           => $accReq->getInstitute(),
-					//'acd_address'             => $accReq->getAddress(),
-					//'acd_legalid'             => $accReq->getLegalID(),
-					'acd_extra'				  => $accReq->getExtra(),
+					'acd_extra'				  => $this->extra2JSON( $accReq->getExtra() ),
 					'acd_bio'                 => $accReq->getBio(),
 					'acd_notes'               => $accReq->getNotes(),
 					'acd_urls'                => $accReq->getUrls(),
@@ -414,8 +396,37 @@ class AccountConfirmSubmission {
 		}
 
 		// TODO: Adding other parameters - Toniher specific -> Apply extra here
-		$body.= "{{User}}";
-		$body.="{{Affiliation|Institute=".$this->institute."|PI=".$this->pi."|Phone=".$this->phone."|Code=".$this->code."}}";
+		global $wgConfirmAccountRequestUserPageWiki, $wgConfirmAccountRequestFormItemsExtra;
+
+		$body.= $wgConfirmAccountRequestUserPageWiki["pre"];
+
+		// Handle array
+		$templateList = array();
+		foreach ( $this->extra as $key => $value ) {
+
+			if ( $wgConfirmAccountRequestFormItemsExtra[ $key ]["template"] ) {
+				$template = $wgConfirmAccountRequestFormItemsExtra[$key]["template"];
+				
+				$templateList[$template] = array();
+
+				if ( $wgConfirmAccountRequestFormItemsExtra[ $key ]["param"] ) {
+					$templateList[$template][$param] = $value;
+				}
+			}
+		}
+
+		// Templates
+		foreach ( $templateList as $template => $params ) {
+			$body.="{{".$template;
+
+			foreach ( $params as $param ) {
+				$body.="|".$param."=".$value;
+			}
+			$body.="}}";
+		}
+ 
+		$body.= $wgConfirmAccountRequestUserPageWiki["post"];
+
 
 		# Add any areas of interest categories...
 		foreach ( ConfirmAccount::getUserAreaConfig() as $name => $conf ) {
@@ -478,5 +489,18 @@ class AccountConfirmSubmission {
 				$this->admin
 			);
 		}
+	}
+
+	/** Convert array into JSON
+	 * @return string
+	 */
+	protected function extra2JSON( $array ) {
+		
+		if ( is_array( $array ) ) {
+			return json_encode( $array );
+		} else {
+			return "";
+		}
+		
 	}
 }

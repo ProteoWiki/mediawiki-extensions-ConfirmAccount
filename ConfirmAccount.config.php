@@ -50,6 +50,11 @@ $wgConfirmAccountRequestFormItemsExtra = array(
 	'researchGroup' => array( "label" => "Research Group", "type" => "numeric", "template" => "User", "param" => "Research_Group", "size" => 50 )
 );
 
+# Additional content to be added in user page
+$wgConfirmAccountRequestUserPageWiki = array(
+	"pre" => "{{Pre}}",
+	"post" => "{{Post}}"
+);
 
 # If files can be attached, what types can be used? (MIME data is checked)
 $wgAccountRequestExts = array( 'txt', 'pdf', 'doc', 'latex', 'rtf', 'text', 'wp', 'wpd', 'sxw' );

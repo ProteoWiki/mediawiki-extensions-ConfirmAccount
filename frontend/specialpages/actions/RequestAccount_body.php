@@ -212,6 +212,8 @@ class RequestAccountPage extends SpecialPage {
 
 			}
 
+			$form .= '</table>';
+
 			if ( $this->hasItem( 'Biography' ) ) {
 				if ( $wgMakeUserPageFromBio ) {
 					$form .= $this->msg( 'requestaccount-bio-text-i' )->parseAsBlock() . "\n";
@@ -222,7 +224,6 @@ class RequestAccountPage extends SpecialPage {
 					htmlspecialchars( $this->mBio ) . "</textarea></p>\n";
 			}
 
-			$form .= '</table>';
 			$form .= '</fieldset>';
 		}
 

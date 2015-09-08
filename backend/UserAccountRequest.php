@@ -209,6 +209,13 @@ class UserAccountRequest {
 	/**
 	 * @return sting
 	 */
+	public function getEmail() {
+		return $this->email;
+	}
+
+	/**
+	 * @return sting
+	 */
 	public function getExtra() {
 		return $this->extra;
 	}
