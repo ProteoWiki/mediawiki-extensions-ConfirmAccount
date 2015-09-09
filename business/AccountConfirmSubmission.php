@@ -380,20 +380,6 @@ class AccountConfirmSubmission {
 
 		$body = ''; // page text
 
-		if ( $wgMakeUserPageFromBio ) {
-			# Add account request bio to userpage
-			$body .= $this->bio;
-			# Add any automatic text for all confirmed accounts
-			if ( $wgAutoUserBioText != '' ) {
-				$body .= "\n\n{$wgAutoUserBioText}";
-			}
-		}
-
-		# Add any automatic text for confirmed accounts of this type
-		$autoText = self::getAutoTextFromType( $this->type );
-		if ( $autoText != '' ) {
-			$body .= "\n\n{$autoText}";
-		}
 
 		// TODO: Adding other parameters - Toniher specific -> Apply extra here
 		global $wgConfirmAccountRequestUserPageWiki, $wgConfirmAccountRequestFormItemsExtra;
@@ -410,6 +396,7 @@ class AccountConfirmSubmission {
 				$templateList[$template] = array();
 
 				if ( $wgConfirmAccountRequestFormItemsExtra[ $key ]["param"] ) {
+					$param = $wgConfirmAccountRequestFormItemsExtra[ $key ]["param"];
 					$templateList[$template][$param] = $value;
 				}
 			}
@@ -427,6 +414,20 @@ class AccountConfirmSubmission {
  
 		$body.= $wgConfirmAccountRequestUserPageWiki["post"];
 
+		if ( $wgMakeUserPageFromBio ) {
+			# Add account request bio to userpage
+			$body .= $this->bio;
+			# Add any automatic text for all confirmed accounts
+			if ( $wgAutoUserBioText != '' ) {
+				$body .= "\n\n{$wgAutoUserBioText}";
+			}
+		}
+
+		# Add any automatic text for confirmed accounts of this type
+		$autoText = self::getAutoTextFromType( $this->type );
+		if ( $autoText != '' ) {
+			$body .= "\n\n{$autoText}";
+		}
 
 		# Add any areas of interest categories...
 		foreach ( ConfirmAccount::getUserAreaConfig() as $name => $conf ) {
