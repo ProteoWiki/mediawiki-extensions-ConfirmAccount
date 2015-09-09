@@ -19,6 +19,8 @@ class ConfirmAccountsPage extends SpecialPage {
 	protected $reqRealName;
 	protected $reqRealSurName;
 
+	protected $reqLinks;
+
 	protected $reqExtra;
 
 	/** @var array */
@@ -102,6 +104,8 @@ class ConfirmAccountsPage extends SpecialPage {
 					$formid = "wpNew".ucfirst( $key );
 					$this->reqExtra[$key] = trim( $request->getText( $formid ) );
 				}
+
+				$this->reqLinks = trim( $request->getText('wpNewLinks') );
 
 				# Action the admin is taking and why
 				$this->submitType = $request->getVal( 'wpSubmitType' );
@@ -433,8 +437,10 @@ class ConfirmAccountsPage extends SpecialPage {
 					"</textarea></p>\n";
 			}
 			if ( $this->hasItem( 'Links' ) ) {
-				$form .= "<p>" . $this->msg( 'confirmaccount-urls' )->escaped() . "</p>\n";
-				$form .= self::parseLinks( $accountReq->getUrls() );
+				$form .= "<p>" . $this->msg( 'confirmaccount-urls' )->escaped() . "\n";
+				$form .= "<textarea tabindex='1' readonly='readonly' name='wpNewLinks' id='wpNewLinks' rows='3' cols='50' style='width:100%'>" .
+					$accountReq->getUrls() .
+				"</textarea></p>\n";
 			}
 			$form .= '</fieldset>';
 		}
@@ -570,6 +576,7 @@ class ConfirmAccountsPage extends SpecialPage {
 				'extra'	   => $this->reqExtra,
 				'bio'      => $this->reqBio,
 				'type'     => $this->reqType,
+				'urls'	   => $this->reqLinks,
 				'areas'    => $areaSet,
 				'action'   => $this->submitType,
 				'reason'   => $this->reason
