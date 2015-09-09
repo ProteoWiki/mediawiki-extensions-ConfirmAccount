@@ -200,16 +200,35 @@ class RequestAccountPage extends SpecialPage {
 				$formValue = "wpExtra-".$key;
 				$label = $key;
 				$size = 35;
+				$type = "text";
+								
 				if ( array_key_exists( "label", $value ) ) {
 					$label = $value["label"];
 				}
 				if ( array_key_exists( "size", $value ) ) {
 					$size = $value["size"];
 				}
+				if ( array_key_exists( "type", $value ) ) {
+					$type = $value["type"];
+				}
+				
+				// TODO: More types here
+				
+				if ( $type == "checkboxes" ) {
+					
+					$values = array();
+					
+					if ( array_key_exists( "values", $value ) ) {
+						$values = $value["values"];
+					}
+					
+					// TODO: DO checkboxes here
+					
+				} else {
 
-				$form .= "<tr><td>" . Xml::label( $label, $formValue ) . "</td>";
-				$form .= "<td>" . Xml::input( $formValue, $size, $this->mExtra[$key], array( 'id' => $formValue ) ) . "</td></tr>\n";
-
+					$form .= "<tr><td>" . Xml::label( $label, $formValue ) . "</td>";
+					$form .= "<td>" . Xml::input( $formValue, $size, $this->mExtra[$key], array( 'id' => $formValue ) ) . "</td></tr>\n";
+				}
 			}
 
 			$form .= '</table>';
