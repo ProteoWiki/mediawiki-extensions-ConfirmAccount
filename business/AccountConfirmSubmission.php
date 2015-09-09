@@ -393,8 +393,6 @@ class AccountConfirmSubmission {
 			if ( $wgConfirmAccountRequestFormItemsExtra[ $key ]["template"] ) {
 				$template = $wgConfirmAccountRequestFormItemsExtra[$key]["template"];
 				
-				$templateList[$template] = array();
-
 				if ( $wgConfirmAccountRequestFormItemsExtra[ $key ]["param"] ) {
 					$param = $wgConfirmAccountRequestFormItemsExtra[ $key ]["param"];
 					$templateList[$template][$param] = $value;
