@@ -401,15 +401,17 @@ class AccountConfirmSubmission {
 		}
 
 		// Templates
-		foreach ( $templateList as $template => $params ) {
-			$body.="{{".$template;
-
-			foreach ( $params as $param ) {
-				$body.="|".$param."=".$value;
-			}
-			$body.="}}";
+		foreach ( array_keys( $templateList ) as $template ) {
+		
+				$body.="{{".$template;
+		
+				$params = $templateList[$template];
+				foreach ( $params as $param => $value ) {
+						$body.="|".$param."=".$value;
+				}
+				$body.="}}";
 		}
- 
+
 		$body.= $wgConfirmAccountRequestUserPageWiki["post"];
 
 		if ( $wgMakeUserPageFromBio ) {
