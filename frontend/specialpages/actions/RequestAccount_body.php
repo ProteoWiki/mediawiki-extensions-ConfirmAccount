@@ -78,7 +78,16 @@ class RequestAccountPage extends SpecialPage {
 		foreach ( $wgConfirmAccountRequestFormItemsExtra as $key => $value ) {
 
 			$formValue = "wpExtra-".$key;
-			$this->mExtra[$key] = trim( $request->getText( $formValue ) ) ;
+			// TODO: Add more options
+			if ( $value["type"] === "checkboxes" ) {
+				$sep = ",";
+				if ( array_key_exists( "separator", $value ) ) {
+					$sep = $value["separator"];
+				}
+				$this->mExtra[$key] = trim( implode( $sep, $request->getValues( $formValue ) ) ) ;
+			} else {
+				$this->mExtra[$key] = trim( $request->getText( $formValue ) ) ;
+			}
 		}
 
 		# We may be confirming an email address here
@@ -220,10 +229,20 @@ class RequestAccountPage extends SpecialPage {
 					
 					if ( array_key_exists( "values", $value ) ) {
 						$values = $value["values"];
+
+						$form .= "<tr><td>".$label."</td>";
+						$iter = 0;
+
+						$form .= "<td>";
+						foreach ( $values as $v ) {
+							$formName = $formValue."[]";
+							$form .=  Xml::checkLabel( $v, $formName, $formValue, false, array( 'value' => $v ) );
+							$iter++;
+						}
+
+						$form .= "</td></tr>\n";
 					}
-					
-					// TODO: DO checkboxes here
-					
+
 				} else {
 
 					$form .= "<tr><td>" . Xml::label( $label, $formValue ) . "</td>";
@@ -371,6 +390,9 @@ class RequestAccountPage extends SpecialPage {
 				'attachmentTempPath'        => $this->mTempPath
 			)
 		);
+
+		var_dump( $submission );
+		exit;
 
 		# Actually submit!
 		list( $status, $msg ) = $submission->submit( $this->getContext() );
