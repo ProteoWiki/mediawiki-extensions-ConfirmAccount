@@ -84,7 +84,14 @@ class RequestAccountPage extends SpecialPage {
 				if ( array_key_exists( "separator", $value ) ) {
 					$sep = $value["separator"];
 				}
-				$this->mExtra[$key] = trim( implode( $sep, $request->getValues( $formValue ) ) ) ;
+
+				$mvalues = $request->getValues( $formValue )[$formValue];
+				$mresult = "";
+				if ( sizeof( $mvalues ) > 0 ) {
+					$mresult = trim( implode( $sep, $mvalues ) );
+				}
+				$this->mExtra[$key] = $mresult;
+
 			} else {
 				$this->mExtra[$key] = trim( $request->getText( $formValue ) ) ;
 			}
@@ -390,9 +397,6 @@ class RequestAccountPage extends SpecialPage {
 				'attachmentTempPath'        => $this->mTempPath
 			)
 		);
-
-		var_dump( $submission );
-		exit;
 
 		# Actually submit!
 		list( $status, $msg ) = $submission->submit( $this->getContext() );

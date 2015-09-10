@@ -393,11 +393,11 @@ class ConfirmAccountsPage extends SpecialPage {
 
 					$label = $key;
 
-					if ( $wgConfirmAccountRequestFormItemsExtra[$key]['label'] ) {
+					if ( array_key_exists( "label", $wgConfirmAccountRequestFormItemsExtra[$key] ) ) {
 						$label = $wgConfirmAccountRequestFormItemsExtra[$key]['label'];
 					}
 
-					if ( $wgConfirmAccountRequestFormItemsExtra[$key]['size'] ) {
+					if ( array_key_exists( "size", $wgConfirmAccountRequestFormItemsExtra[$key] ) ) {
 						$size = $wgConfirmAccountRequestFormItemsExtra[$key]['size'];
 					}
 
