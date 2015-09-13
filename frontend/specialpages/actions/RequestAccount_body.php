@@ -198,7 +198,7 @@ class RequestAccountPage extends SpecialPage {
 		}
 
 		if ( $this->hasItem( 'Biography' ) || $this->hasItem( 'RealName' ) ) {
-			$form .= '<fieldset>';
+			$form .= '<fieldset id="fieldset-person">';
 			$form .= '<legend>' . $this->msg( 'requestaccount-leg-person' )->escaped() . '</legend>';
 			$form .= '<table cellpadding=\'4\'>';
 
@@ -237,12 +237,13 @@ class RequestAccountPage extends SpecialPage {
 					if ( array_key_exists( "values", $value ) ) {
 						$values = $value["values"];
 
-						$form .= "<tr><td>".$label."</td>";
+						$form .= "<tr id='input-"+$formValue+"'><td>".$label."</td>";
 						$iter = 0;
+
+						$formName = $formValue."[]";
 
 						$form .= "<td>";
 						foreach ( $values as $v ) {
-							$formName = $formValue."[]";
 							$form .=  "<div class='checklabel'>".Xml::checkLabel( $v, $formName, $formValue, false, array( 'value' => $v ) )."</div>";
 							$iter++;
 						}
@@ -252,7 +253,7 @@ class RequestAccountPage extends SpecialPage {
 
 				} else {
 
-					$form .= "<tr><td>" . Xml::label( $label, $formValue ) . "</td>";
+					$form .= "<tr id='input-"+$formValue+"'><td>" . Xml::label( $label, $formValue ) . "</td>";
 					$form .= "<td>" . Xml::input( $formValue, $size, $this->mExtra[$key], array( 'id' => $formValue ) ) . "</td></tr>\n";
 				}
 			}
@@ -264,7 +265,7 @@ class RequestAccountPage extends SpecialPage {
 					$form .= $this->msg( 'requestaccount-bio-text-i' )->parseAsBlock() . "\n";
 				}
 				$form .= $this->msg( 'requestaccount-bio-text' )->parseAsBlock() . "\n";
-				$form .= "<p>" . $this->msg( 'requestaccount-bio' )->parse() . "\n";
+				$form .= "<p id='desc-wpBio'>" . $this->msg( 'requestaccount-bio' )->parse() . "\n";
 				$form .= "<textarea tabindex='1' name='wpBio' id='wpBio' rows='12' cols='80' style='width:100%; background-color:#f9f9f9;'>" .
 					htmlspecialchars( $this->mBio ) . "</textarea></p>\n";
 			}
