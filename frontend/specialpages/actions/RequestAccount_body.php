@@ -243,7 +243,7 @@ class RequestAccountPage extends SpecialPage {
 						$form .= "<td>";
 						foreach ( $values as $v ) {
 							$formName = $formValue."[]";
-							$form .=  Xml::checkLabel( $v, $formName, $formValue, false, array( 'value' => $v ) );
+							$form .=  "<div class='checklabel'>".Xml::checkLabel( $v, $formName, $formValue, false, array( 'value' => $v ) )."</div>";
 							$iter++;
 						}
 
