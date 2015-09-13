@@ -141,7 +141,7 @@ class RequestAccountPage extends SpecialPage {
 		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'name' => 'accountrequest',
 			'action' => $this->getPageTitle()->getLocalUrl(), 'enctype' => 'multipart/form-data' ) );
 
-		$form .= '<fieldset><legend>' . $this->msg( 'requestaccount-leg-user' )->escaped() . '</legend>';
+		$form .= '<fieldset id="fieldset-user"><legend>' . $this->msg( 'requestaccount-leg-user' )->escaped() . '</legend>';
 		$form .= $this->msg( 'requestaccount-acc-text' )->parseAsBlock() . "\n";
 		$form .= '<table cellpadding=\'4\'>';
 		if ( $this->hasItem( 'UserName' ) ) {
@@ -262,10 +262,10 @@ class RequestAccountPage extends SpecialPage {
 
 			if ( $this->hasItem( 'Biography' ) ) {
 				if ( $wgMakeUserPageFromBio ) {
-					$form .= $this->msg( 'requestaccount-bio-text-i' )->parseAsBlock() . "\n";
+					$form .= "<p id='desc-bio-text-i'>".$this->msg( 'requestaccount-bio-text-i' )->parseAsBlock() . "</p>\n";
 				}
-				$form .= $this->msg( 'requestaccount-bio-text' )->parseAsBlock() . "\n";
-				$form .= "<p id='desc-wpBio'>" . $this->msg( 'requestaccount-bio' )->parse() . "\n";
+				$form .= "<p id='desc-bio-text'>".$this->msg( 'requestaccount-bio-text' )->parseAsBlock() . "</p>\n";
+				$form .= "<p id='input-wpBio'>" . $this->msg( 'requestaccount-bio' )->parse() . "\n";
 				$form .= "<textarea tabindex='1' name='wpBio' id='wpBio' rows='12' cols='80' style='width:100%; background-color:#f9f9f9;'>" .
 					htmlspecialchars( $this->mBio ) . "</textarea></p>\n";
 			}
@@ -321,7 +321,7 @@ class RequestAccountPage extends SpecialPage {
 		$form .= Html::Hidden( 'wpEditToken', $reqUser->getEditToken() ) . "\n";
 		$form .= Html::Hidden( 'attachment', $this->mPrevAttachment ) . "\n";
 		$form .= Html::Hidden( 'forgotAttachment', $this->mForgotAttachment ) . "\n";
-		$form .= "<p>" . Xml::submitButton( $this->msg( 'requestaccount-submit' )->text() ) . "</p>";
+		$form .= "<p id='submit-button'>" . Xml::submitButton( $this->msg( 'requestaccount-submit' )->text() ) . "</p>";
 		$form .= Xml::closeElement( 'form' );
 
 		$out->addHTML( $form );
