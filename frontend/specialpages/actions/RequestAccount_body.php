@@ -237,7 +237,7 @@ class RequestAccountPage extends SpecialPage {
 					if ( array_key_exists( "values", $value ) ) {
 						$values = $value["values"];
 
-						$form .= "<tr id='input-".$formValue."'><td>".$label."</td>";
+						$form .= "<tr id='input-".$formValue."'><td><label>".$label."</label></td>";
 						$iter = 0;
 
 						$formName = $formValue."[]";
@@ -252,9 +252,16 @@ class RequestAccountPage extends SpecialPage {
 					}
 
 				} else {
+					
+					$params = array( 'id' => $formValue );
+					
+					if ( array_key_exists( "required", $value ) ) {
+						$type = $value["type"];
+						$params["required"] = "required";
+					}
 
 					$form .= "<tr id='input-".$formValue."'><td>" . Xml::label( $label, $formValue ) . "</td>";
-					$form .= "<td>" . Xml::input( $formValue, $size, $this->mExtra[$key], array( 'id' => $formValue ) ) . "</td></tr>\n";
+					$form .= "<td>" . Xml::input( $formValue, $size, $this->mExtra[$key], $params ) . "</td></tr>\n";
 				}
 			}
 
