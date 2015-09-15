@@ -217,6 +217,7 @@ class RequestAccountPage extends SpecialPage {
 				$label = $key;
 				$size = 35;
 				$type = "text";
+				$desc = "";
 								
 				if ( array_key_exists( "label", $value ) ) {
 					$label = $value["label"];
@@ -226,6 +227,9 @@ class RequestAccountPage extends SpecialPage {
 				}
 				if ( array_key_exists( "type", $value ) ) {
 					$type = $value["type"];
+				}
+				if ( array_key_exists( "desc", $value ) ) {
+					$desc = $value["desc"];
 				}
 				
 				// TODO: More types here
@@ -248,6 +252,10 @@ class RequestAccountPage extends SpecialPage {
 							$iter++;
 						}
 
+						if ( ! empty($desc) ) {
+							$form.="<p class='desc'>"+$desc+"</p>";
+						}
+						
 						$form .= "</td></tr>\n";
 					}
 
@@ -261,7 +269,13 @@ class RequestAccountPage extends SpecialPage {
 					}
 
 					$form .= "<tr id='input-".$formValue."'><td>" . Xml::label( $label, $formValue ) . "</td>";
-					$form .= "<td>" . Xml::input( $formValue, $size, $this->mExtra[$key], $params ) . "</td></tr>\n";
+					$form .= "<td>" . Xml::input( $formValue, $size, $this->mExtra[$key], $params );
+					
+					if ( ! empty($desc) ) {
+						$form.="<p class='desc'>"+$desc+"</p>";
+					}
+					
+					$form .= "</td></tr>\n";
 				}
 			}
 
