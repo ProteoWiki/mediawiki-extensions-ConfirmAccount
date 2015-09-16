@@ -253,7 +253,7 @@ class RequestAccountPage extends SpecialPage {
 						}
 
 						if ( ! empty($desc) ) {
-							$form.="<p class='desc'>"+$desc+"</p>";
+							$form.="<p class='desc'>".$desc."</p>";
 						}
 						
 						$form .= "</td></tr>\n";
@@ -272,7 +272,7 @@ class RequestAccountPage extends SpecialPage {
 					$form .= "<td>" . Xml::input( $formValue, $size, $this->mExtra[$key], $params );
 					
 					if ( ! empty($desc) ) {
-						$form.="<p class='desc'>"+$desc+"</p>";
+						$form.="<p class='desc'>".$desc."</p>";
 					}
 					
 					$form .= "</td></tr>\n";
